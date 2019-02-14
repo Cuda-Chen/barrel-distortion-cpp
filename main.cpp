@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 	if(argc == 3)
 	{
 		input = imread(argv[1]);
-		output = Mat(input.rows, input.cols, input.type);
+		output = Mat(input.rows, input.cols, input.type());
 		K = atof(argv[2]);
 		width = input.cols;
 		height = input.rows;
@@ -26,7 +26,7 @@ int main(int argc, char **argv)
 	else if(argc == 5)
 	{
 		input = imread(argv[1]);
-		output = Mat(input.rows, input.cols, input.type);
+		output = Mat(input.rows, input.cols, input.type());
 		K = atof(argv[2]);
 		width = input.cols;
 		height = input.rows;

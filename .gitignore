@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+barrel_distort_cpp
+
+# CMake build folder
+[Bb]uild/

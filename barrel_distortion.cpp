@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include "opencv2/opencv.hpp"
-#include "barrel_distortion_hpp"
+#include "barrel_distortion.hpp"
 
 using std::cout;
 using std::endl;
@@ -19,7 +19,7 @@ barrelDistortion::barrelDistortion(Mat& src, Mat& dst,
 	this->centerX = centerX;
 	this->centerY = centerY;
 	this->width = width;
-	this->height = height
+	this->height = height;
 }
 
 void barrelDistortion::barrel_distort()
@@ -47,20 +47,20 @@ void barrelDistortion::barrel_distort()
 			float x = getRadialX((float)i, (float)j, centerX, centerY, K);
 			float y = getRadialY((float)i, (float)j, centerX, centerY, K);
 			sampleImage(src, y, x, temp);
-			dst.at<j, i> = temp;
+			dst.at<Scalar>(j, i) = temp;
 		}
 	}
 }
 
-float barrelDistortion::calc_shift(float x1, float x2, float cv, float k)
+float barrelDistortion::calc_shift(float x1, float x2, float cx, float k)
 {
 	float x3 = x1 + (x2 - x1) * 0.5;
 	float result1 = x1 + ((x1 - cx) * k * ((x1 - cx) * (x1 - cx)));
 	float result3 = x3 + ((x3 - cx) * k * ((x3 - cx) * (x3 - cx)));
 
-	if(res1 > -thresh and res1 < thresh)
+	if(result1 > -thresh and result1 < thresh)
 		return x1;
-	if(res3 < 0)
+	if(result3 < 0)
 	{
 		return calc_shift(x3, x2, cx, k);
 	}
@@ -95,10 +95,10 @@ void barrelDistortion::sampleImage(Mat& src, float idx0, float idx1, Scalar& res
 		(idx1 > width - 1))
 	{
 		//temp = Scalar(0, 0, 0, 0);
-		temp[0] = 0;
-		temp[1] = 0;
-		temp[2] = 0;
-		temp[3] = 0;
+		result[0] = 0;
+		result[1] = 0;
+		result[2] = 0;
+		result[3] = 0;
 		return;
 	}
 
@@ -107,16 +107,16 @@ void barrelDistortion::sampleImage(Mat& src, float idx0, float idx1, Scalar& res
 	float idx1_floor = floor(idx1);
     	float idx1_ceil = ceil(idx1);
 
-	Scalar s1 = src.at<(int)idx0_floor, (int)idx1_floor>;
-	Scalar s2 = src.at<(int)idx0_floor, (int)idx1_ceil>;
-	Scalar s3 = src.at<(int)idx0_ceil, (int)idx1_ceil>;
-	Scalar s4 = src.at<(int)idx0_ceil, (int)idx_floor>;
+	Scalar s1 = src.at<Scalar>((int)idx0_floor, (int)idx1_floor);
+	Scalar s2 = src.at<Scalar>((int)idx0_floor, (int)idx1_ceil);
+	Scalar s3 = src.at<Scalar>((int)idx0_ceil, (int)idx1_ceil);
+	Scalar s4 = src.at<Scalar>((int)idx0_ceil, (int)idx1_floor);
 
 	float x = idx0 - idx0_floor;
 	float y = idx1 - idx1_floor;
 
-	temp[0] = s1[0] * (1 - x) * (1 - y) + s2[0] * (1 - x) * y + s3[0] * x * y + s4[0] * x * (1 - y);
-	temp[1] = s1[1] * (1 - x) * (1 - y) + s2[1] * (1 - x) * y + s3[1] * x * y + s4[1] * x * (1 - y);
-	temp[2] = s1[2] * (1 - x) * (1 - y) + s2[2] * (1 - x) * y + s3[2] * x * y + s4[2] * x * (1 - y);
-	temp[2] = s1[3] * (1 - x) * (1 - y) + s2[3] * (1 - x) * y + s3[3] * x * y + s4[3] * x * (1 - y);
+	result[0] = s1[0] * (1 - x) * (1 - y) + s2[0] * (1 - x) * y + s3[0] * x * y + s4[0] * x * (1 - y);
+	result[1] = s1[1] * (1 - x) * (1 - y) + s2[1] * (1 - x) * y + s3[1] * x * y + s4[1] * x * (1 - y);
+	result[2] = s1[2] * (1 - x) * (1 - y) + s2[2] * (1 - x) * y + s3[2] * x * y + s4[2] * x * (1 - y);
+	result[2] = s1[3] * (1 - x) * (1 - y) + s2[3] * (1 - x) * y + s3[3] * x * y + s4[3] * x * (1 - y);
 }

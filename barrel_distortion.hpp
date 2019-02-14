@@ -3,9 +3,10 @@
 
 #include "opencv2/opencv.hpp"
 
-class barrelDistortion {
+using cv::Mat;
+using cv::Scalar;
 
-	using namespace cv;
+class barrelDistortion {
 public:
 	barrelDistortion(Mat& src, Mat& dst,
 		float K,
@@ -24,13 +25,13 @@ private:
 
 	float thresh = 1;
 	float xscale;
-	float yxcale;
+	float yscale;
 	float xshift;
 	float yshift;
 
 	float calc_shift(float x1, float x2, float cx, float k);
 	float getRadialX(float x, float y, float cx, float cy, float k);
-	float getRadialY(float x, float, y, float cx, float cy, float k);
+	float getRadialY(float x, float y, float cx, float cy, float k);
 	void sampleImage(Mat& src, float idx0, float idx1, Scalar& result);
 };
 
