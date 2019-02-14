@@ -20,10 +20,18 @@ int main(int argc, char **argv)
 		K = atof(argv[2]);
 		width = input.cols;
 		height = input.rows;
-		centerX = 
+		centerX = width / 2;
+		centerY = height / 2;
 	}
 	else if(argc == 5)
 	{
+		input = imread(argv[1]);
+		output = Mat(input.rows, input.cols, input.type);
+		K = atof(argv[2]);
+		width = input.cols;
+		height = input.rows;
+		centerX = atof(argv[3]);
+		centerY = atof(argv[4]);	
 	}
 	else
 	{
@@ -37,6 +45,10 @@ int main(int argc, char **argv)
 	}
 
 	// barrel distort here
+
+	// show output
+	imshow("distorted", output);
+	waitKey();
 
 	return 0;
 }
