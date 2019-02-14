@@ -13,7 +13,7 @@ $ cd build
 $ cmake ..
 $ make
 $ cd ..
-$ ./barrel_distort_cpp
+$ ./barrel_distort_cpp <input image path> <K: coefficient of barrel distortion> [x corrdinate of center of distortion (in pixel)] [y corrdinate of center of distortion (in pixel)]
 ```
 
 # Reference
