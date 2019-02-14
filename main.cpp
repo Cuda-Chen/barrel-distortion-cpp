@@ -45,6 +45,9 @@ int main(int argc, char **argv)
 	}
 
 	// barrel distort here
+	barrelDistortion barrel = barrelDistortion(input, output, 
+		K, centerX, centerY, width, height);
+	barrel.barrel_distort();
 
 	// show output
 	imshow("distorted", output);

@@ -95,10 +95,10 @@ void barrelDistortion::sampleImage(Mat& src, float idx0, float idx1, Scalar& res
 		(idx1 > width - 1))
 	{
 		//temp = Scalar(0, 0, 0, 0);
-		result[0] = 0;
-		result[1] = 0;
-		result[2] = 0;
-		result[3] = 0;
+		result.val[0] = 0;
+		result.val[1] = 0;
+		result.val[2] = 0;
+		result.val[3] = 0;
 		return;
 	}
 
@@ -115,8 +115,8 @@ void barrelDistortion::sampleImage(Mat& src, float idx0, float idx1, Scalar& res
 	float x = idx0 - idx0_floor;
 	float y = idx1 - idx1_floor;
 
-	result[0] = s1[0] * (1 - x) * (1 - y) + s2[0] * (1 - x) * y + s3[0] * x * y + s4[0] * x * (1 - y);
-	result[1] = s1[1] * (1 - x) * (1 - y) + s2[1] * (1 - x) * y + s3[1] * x * y + s4[1] * x * (1 - y);
-	result[2] = s1[2] * (1 - x) * (1 - y) + s2[2] * (1 - x) * y + s3[2] * x * y + s4[2] * x * (1 - y);
-	result[2] = s1[3] * (1 - x) * (1 - y) + s2[3] * (1 - x) * y + s3[3] * x * y + s4[3] * x * (1 - y);
+	result.val[0] = s1.val[0] * (1 - x) * (1 - y) + s2.val[0] * (1 - x) * y + s3.val[0] * x * y + s4.val[0] * x * (1 - y);
+	result.val[1] = s1.val[1] * (1 - x) * (1 - y) + s2.val[1] * (1 - x) * y + s3.val[1] * x * y + s4.val[1] * x * (1 - y);
+	result.val[2] = s1.val[2] * (1 - x) * (1 - y) + s2.val[2] * (1 - x) * y + s3.val[2] * x * y + s4.val[2] * x * (1 - y);
+	result.val[2] = s1.val[3] * (1 - x) * (1 - y) + s2.val[3] * (1 - x) * y + s3.val[3] * x * y + s4.val[3] * x * (1 - y);
 }
