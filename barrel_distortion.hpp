@@ -33,6 +33,8 @@ private:
 	float getRadialX(float x, float y, float cx, float cy, float k);
 	float getRadialY(float x, float y, float cx, float cy, float k);
 	void sampleImage(Mat& src, float idx0, float idx1, Scalar& result);
+
+	void sampleImageTest(Mat& src, float idx0, float idx1, cv::Vec3b& result);
 };
 
 #endif

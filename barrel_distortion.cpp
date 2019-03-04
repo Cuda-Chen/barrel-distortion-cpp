@@ -24,6 +24,9 @@ barrelDistortion::barrelDistortion(Mat& src, Mat& dst,
 
 void barrelDistortion::barrel_distort()
 {
+	cout << "channels: " << src.channels() 
+		<< " type: " << src.type() << endl;
+
 	xshift = calc_shift(0, centerX-1, centerX, K);
 	float newcenterX = width - centerX;
 	float xshift_2 = calc_shift(0, newcenterX-1, newcenterX, K);
@@ -43,11 +46,14 @@ void barrelDistortion::barrel_distort()
 	{
 		for(int i = 0; i < width; i++)
 		{
-			Scalar temp;
+			//Scalar temp;
+			cv::Vec3b temp;
 			float x = getRadialX((float)i, (float)j, centerX, centerY, K);
 			float y = getRadialY((float)i, (float)j, centerX, centerY, K);
-			sampleImage(src, y, x, temp);
-			dst.at<Scalar>(j, i) = temp;
+			//sampleImage(src, y, x, temp);
+			sampleImageTest(src, y, x, temp);
+			//dst.at<Scalar>(j, i) = temp;
+			dst.at<cv::Vec3b>(j, i) = temp;
 		}
 	}
 }
@@ -119,4 +125,39 @@ void barrelDistortion::sampleImage(Mat& src, float idx0, float idx1, Scalar& res
 	result.val[1] = s1.val[1] * (1 - x) * (1 - y) + s2.val[1] * (1 - x) * y + s3.val[1] * x * y + s4.val[1] * x * (1 - y);
 	result.val[2] = s1.val[2] * (1 - x) * (1 - y) + s2.val[2] * (1 - x) * y + s3.val[2] * x * y + s4.val[2] * x * (1 - y);
 	result.val[2] = s1.val[3] * (1 - x) * (1 - y) + s2.val[3] * (1 - x) * y + s3.val[3] * x * y + s4.val[3] * x * (1 - y);
+}
+
+void barrelDistortion::sampleImageTest(Mat& src, float idx0, float idx1, cv::Vec3b& result)
+{
+	// if one of index is out-of-bound
+	if((idx0 < 0) ||
+		(idx1 < 0) ||
+		(idx0 > height - 1) ||
+		(idx1 > width - 1))
+	{
+		//temp = Scalar(0, 0, 0, 0);
+		result.val[0] = 0;
+		result.val[1] = 0;
+		result.val[2] = 0;
+		//result.val[3] = 0;
+		return;
+	}
+
+	float idx0_floor = floor(idx0);
+    	float idx0_ceil = ceil(idx0);
+	float idx1_floor = floor(idx1);
+    	float idx1_ceil = ceil(idx1);
+
+	cv::Vec3b s1 = src.at<cv::Vec3b>((int)idx0_floor, (int)idx1_floor);
+	cv::Vec3b s2 = src.at<cv::Vec3b>((int)idx0_floor, (int)idx1_ceil);
+	cv::Vec3b s3 = src.at<cv::Vec3b>((int)idx0_ceil, (int)idx1_ceil);
+	cv::Vec3b s4 = src.at<cv::Vec3b>((int)idx0_ceil, (int)idx1_floor);
+
+	float x = idx0 - idx0_floor;
+	float y = idx1 - idx1_floor;
+
+	result.val[0] = s1.val[0] * (1 - x) * (1 - y) + s2.val[0] * (1 - x) * y + s3.val[0] * x * y + s4.val[0] * x * (1 - y);
+	result.val[1] = s1.val[1] * (1 - x) * (1 - y) + s2.val[1] * (1 - x) * y + s3.val[1] * x * y + s4.val[1] * x * (1 - y);
+	result.val[2] = s1.val[2] * (1 - x) * (1 - y) + s2.val[2] * (1 - x) * y + s3.val[2] * x * y + s4.val[2] * x * (1 - y);
+	//result.val[2] = s1.val[3] * (1 - x) * (1 - y) + s2.val[3] * (1 - x) * y + s3.val[3] * x * y + s4.val[3] * x * (1 - y);
 }
