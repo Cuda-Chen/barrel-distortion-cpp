@@ -124,7 +124,7 @@ void barrelDistortion::sampleImage(Mat& src, float idx0, float idx1, Scalar& res
 	result.val[0] = s1.val[0] * (1 - x) * (1 - y) + s2.val[0] * (1 - x) * y + s3.val[0] * x * y + s4.val[0] * x * (1 - y);
 	result.val[1] = s1.val[1] * (1 - x) * (1 - y) + s2.val[1] * (1 - x) * y + s3.val[1] * x * y + s4.val[1] * x * (1 - y);
 	result.val[2] = s1.val[2] * (1 - x) * (1 - y) + s2.val[2] * (1 - x) * y + s3.val[2] * x * y + s4.val[2] * x * (1 - y);
-	result.val[2] = s1.val[3] * (1 - x) * (1 - y) + s2.val[3] * (1 - x) * y + s3.val[3] * x * y + s4.val[3] * x * (1 - y);
+	result.val[3] = s1.val[3] * (1 - x) * (1 - y) + s2.val[3] * (1 - x) * y + s3.val[3] * x * y + s4.val[3] * x * (1 - y);
 }
 
 void barrelDistortion::sampleImageTest(Mat& src, float idx0, float idx1, cv::Vec3b& result)
@@ -159,5 +159,5 @@ void barrelDistortion::sampleImageTest(Mat& src, float idx0, float idx1, cv::Vec
 	result.val[0] = s1.val[0] * (1 - x) * (1 - y) + s2.val[0] * (1 - x) * y + s3.val[0] * x * y + s4.val[0] * x * (1 - y);
 	result.val[1] = s1.val[1] * (1 - x) * (1 - y) + s2.val[1] * (1 - x) * y + s3.val[1] * x * y + s4.val[1] * x * (1 - y);
 	result.val[2] = s1.val[2] * (1 - x) * (1 - y) + s2.val[2] * (1 - x) * y + s3.val[2] * x * y + s4.val[2] * x * (1 - y);
-	//result.val[2] = s1.val[3] * (1 - x) * (1 - y) + s2.val[3] * (1 - x) * y + s3.val[3] * x * y + s4.val[3] * x * (1 - y);
+	//result.val[3] = s1.val[3] * (1 - x) * (1 - y) + s2.val[3] * (1 - x) * y + s3.val[3] * x * y + s4.val[3] * x * (1 - y);
 }
