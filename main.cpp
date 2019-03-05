@@ -39,7 +39,7 @@ int main(int argc, char **argv)
 			<input image> \
 			<K: coefficient of distortion> \
 			[x corrdinate of center of distortion (in pixel)] \
-			[y corrdinate of center of distortion (in pixel]"
+			[y corrdinate of center of distortion (in pixel)]"
 			<< endl;
 		return 1;
 	}
