@@ -1,5 +1,5 @@
 # barrel-distortion-cpp
-A barrel distortion example written in C++
+A barrel distortion example written with OpenCV C++ API.
 
 # Dependencies
 * CMake
